@@ -30,7 +30,7 @@ Let's break down the steps to set up and use these states effectively.
 
 ### Step 1: Initialize State Variables
 
-<CodeBlock language="tsx">
+<CodeBlock language="tsx" code=
 {`
 "use client";
 
@@ -46,11 +46,11 @@ export default function DataUpdateComponent({ dataItem }) {
     // ...
 }
 `}
-</CodeBlock>
+/>
 
 ### Step 2: Sync State with Incoming Data
 
-<CodeBlock language="tsx">
+<CodeBlock language="tsx" code=
 {`
 "use client";
 
@@ -76,11 +76,11 @@ export default function DataUpdateComponent({ dataItem }) {
     );
 }
 `}
-</CodeBlock>
+/>
 
 ### Step 3: Render the Form with Edit Controls
 
-<CodeBlock language="tsx">
+<CodeBlock language="tsx" code=
 {`
 "use client";
 
@@ -134,11 +134,11 @@ export default function DataUpdateComponent({ dataItem }) {
     );
 }
 `}
-</CodeBlock>
+/>
 
 ### Step 4: Handle Edit Mode and Actions
 
-<CodeBlock language="tsx">
+<CodeBlock language="tsx" code=
 {`
 "use client";
 
@@ -224,12 +224,12 @@ export default function DataUpdateComponent({ dataItem }) {
     );
 }
 `}
-</CodeBlock>
+/>
 
 ## Creating our Server Actions
 
 Here's how we can implement the Update and Delete Server Actions:
-<CodeBlock language="tsx"> 
+<CodeBlock language="tsx" code=
 {`
 "use server";
 
@@ -266,7 +266,7 @@ export async function updateData(data: FormData) {
     }
 }
 `}
-</CodeBlock>
+/>
 
 <PostInfoSection>
 In Next.js, **`revalidatePath`** forces the regeneration of a specific route's cached page, ensuring it reflects updated data after changes like database updates or deletions. For more details, see [the Next.js revalidatePath documentation](https://nextjs.org/docs/app/api-reference/functions/revalidatePath).
@@ -274,18 +274,18 @@ In Next.js, **`revalidatePath`** forces the regeneration of a specific route's c
 
 And now we can implement these functions in our Client Component. For example, in the handleUpdate function:
 
-<CodeBlock language="tsx">
+<CodeBlock language="tsx" code=
 {`
 await updateData(formData)
 `}
-</CodeBlock>
+/>
 
 Similarly, in the handleDelete function:
 
-<CodeBlock language="tsx">
+<CodeBlock language="tsx" code=
 {`
 await deleteData(id)
-`}</CodeBlock>
+`}/>
 
 ## Using our Component with a Dynamic Route
 
@@ -293,7 +293,7 @@ To use this component with a dynamic route in Next.js, you'll need to set up a r
 
 ### Step 1: Get Date from the Server
 
-<CodeBlock language="tsx">
+<CodeBlock language="tsx" code=
 {`
 "server only";
 
@@ -310,7 +310,7 @@ export async function getDataItem(id) {
     }
 }
 `} 
-</CodeBlock>
+/>
 
 <PostInfoSection>
 #### Use Server vs Server Only
@@ -325,7 +325,7 @@ For more details, check out the [Next.js Composition Patterns documentation](htt
 
 ### Step 2: Create a Dynamic Route
 
-<CodeBlock language="tsx">
+<CodeBlock language="tsx" code=
 {`
 import { getDataItem } from '@/lib/data'
 import { DataUpdateComponent } from '@/components/DataUpdateComponent'
@@ -342,7 +342,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     )
 }
 `}
-</CodeBlock>
+/>
 
 Now we have a fully functional update form that can be used in a Next.js app. This pattern can be extended to include additional features like form validation, file uploads, or multi-step forms. But for now, let's see how this pattern is applied in a real-world example.
 

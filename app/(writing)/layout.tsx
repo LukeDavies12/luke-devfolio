@@ -1,3 +1,5 @@
+"use client"
+
 import './writing.css';
 
 export default function RootLayout({
