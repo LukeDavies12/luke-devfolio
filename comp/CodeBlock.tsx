@@ -1,44 +1,50 @@
-'use client';
+'use client'
 
+import { transformerNotationDiff } from '@shikijs/transformers';
 import { useEffect, useState } from 'react';
-import { highlightCode } from '../utils/shikiHighlighter';
+import * as shiki from 'shiki';
 
+// Define CodeBlockProps interface
 interface CodeBlockProps {
   children: string;
   language: string;
+  highlightedCode?: string;
 }
 
+let highlighter: shiki.Highlighter | null = null;
+
+const getHighlighter = async () => {
+  if (!highlighter) {
+    highlighter = await shiki.createHighlighter({
+      themes: ['vitesse-dark'],
+      langs: ['tsx', 'diff'],
+    });
+  }
+  return highlighter;
+};
+
+// Create CodeBlock component
 const CodeBlock = ({ children, language }: CodeBlockProps) => {
-  const [highlightedCode, setHighlightedCode] = useState<string | null>(null);
-  const [isCopied, setIsCopied] = useState(false);
+  const [highlighted, setHighlighted] = useState<string | null>(null);
 
   useEffect(() => {
-    const highlight = async () => {
-      const highlighted = await highlightCode(children.trim(), language);
-      setHighlightedCode(highlighted);
-    };
-    highlight();
+    (async () => {
+      const highlighter = await getHighlighter();
+      const html = await highlighter.codeToHtml(children, {
+        lang: language,
+        theme: 'vitesse-dark',
+        transformers: [transformerNotationDiff()],
+      });
+      setHighlighted(html);
+    })();
   }, [children, language]);
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(children).then(() => {
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
-    });
-  };
 
   return (
     <div className="relative bg-vitesse-dark-bg text-white rounded mb-4 p-4 overflow-x-auto">
       <div className="absolute top-2 left-2 text-xs text-gray-400">{language}</div>
-      <button
-        onClick={copyToClipboard}
-        className="absolute top-2 right-2 bg-gray-700 text-white py-1 px-2 rounded text-xs hover:bg-gray-600"
-      >
-        {isCopied ? 'Copied' : 'Copy'}
-      </button>
       <div
         className="mt-4"
-        dangerouslySetInnerHTML={{ __html: highlightedCode ?? '' }}
+        dangerouslySetInnerHTML={{ __html: highlighted ?? '' }}
       />
     </div>
   );
