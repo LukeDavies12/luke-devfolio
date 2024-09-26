@@ -2,11 +2,14 @@ p {
   @apply mb-3;
 }
 
-h1,
 h2,
 h3,
 h4 {
   @apply mb-1;
+}
+
+h2 {
+  @apply mt-24
 }
 
 ul {
@@ -23,7 +26,7 @@ ul li::marker {
 }
 
 .has-diff .diff.add {
-  @apply bg-green-100 dark:bg-green-900;
+  @apply bg-green-950;
 }
 
 .has-diff .diff.remove {
