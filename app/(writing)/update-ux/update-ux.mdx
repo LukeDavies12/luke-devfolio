@@ -348,6 +348,16 @@ Now we have a fully functional update form that can be used in a Next.js app. Th
 
 ## QB Logs Demo
 
+<video controls className='w-full'>
+  <source src="http://localhost:3001/UpdateUXDemo.mov" type="video/mp4"/>
+</video>
+<br/>
+Code: [Github Repo](https://github.com/LukeDavies12/qblogs)
+- **Get Data**: <InlineCode>data/app/get/play.ts</InlineCode>
+- **Dynamic Route**: <InlineCode>app/(app)/game/play/[id]/page.tsx</InlineCode>
+- **Server Actions (Update/Delete)**: <InlineCode>data/app/actions/Play.ts</InlineCode>
+- **Client Component**: <InlineCode>app/(app)/game/play/[id]/PlayDataCorrection.tsx</InlineCode>
+
 ## Conclusion
 
-By incorporating Server Actions, reactive state management, and a clean user interface, you can significantly improve the experience of users working with update forms in your Next.js app. **This pattern also scales well, whether you're updating a blog post, a data entry form, or a complex dataset like in QB Logs.**
+By using Server Actions, reactive state management, and a clean UI, you can greatly improve the experience of updating forms in your Next.js app. **This pattern scales well, whether for blog posts, data entry, or complex datasets like in QB Logs.** Have questions or need help implementing this? Reach out to me on [Twitter](https://twitter.com/Luke_Davies09).
