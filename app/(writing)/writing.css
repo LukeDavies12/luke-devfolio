@@ -1,0 +1,47 @@
+p {
+  @apply mb-3;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply mb-1;
+}
+
+ul {
+  @apply list-disc list-inside mb-3;
+}
+
+ul li::marker {
+  font-size: 1.15em;
+  color: theme("colors.neutral.300");
+}
+
+.has-diff .line {
+  @apply w-full relative;
+}
+
+.has-diff .diff.add {
+  @apply bg-green-100 dark:bg-green-900;
+}
+
+.has-diff .diff.remove {
+  @apply bg-red-100 dark:bg-red-900;
+}
+
+.has-diff .diff::before {
+  @apply absolute left-0 w-1 h-full content-[''];
+}
+
+.has-diff .diff.add::before {
+  @apply bg-green-500;
+}
+
+.has-diff .diff.remove::before {
+  @apply bg-red-500;
+}
+
+.has-diff {
+  @apply font-mono text-sm;
+}

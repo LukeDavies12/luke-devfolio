@@ -1,0 +1,74 @@
+import CodeBlock from '@/comp/CodeBlock';
+import InlineCode from '@/comp/InlineCode';
+
+# App Router: Crafting a Clean UX for Update Pages
+
+Implementing resource updates and deletions in a Next.js App Router project offers an opportunity to enhance the user experience (UX) of your product. But without a solid grasp of the new Server Actions features, you might miss out on valuable improvements that are surprisingly easy to implement.
+
+In this post, we'll explore how I leveraged Server Actions in my application, [QB Logs](https://github.com/LukeDavies12/qblogs), to create a seamless UX for updating and deleting resources. **We'll focus on toggling edit states, displaying loading indicators, confirming deletions, and properly revalidating cache and rerouting.**
+
+## Understanding Server Actions
+
+Before diving into the code, let's briefly understand what Server Actions are. Server Actions allow you to define functions that run on the server but can be invoked from client components. This means you can keep your server-side logic encapsulated while still interacting with it directly from your client-side code.
+
+## Setting Up the Edit State
+
+To create an interactive form, we need to manage several state variables within our component:
+
+- <InlineCode>isEditing</InlineCode>: Determines if the form is in edit mode.
+- <InlineCode>formData</InlineCode>: Holds the current form values.
+- <InlineCode>originalData</InlineCode>: Keeps a copy of the original data for reset purposes.
+- <InlineCode>isPending</InlineCode>: Indicates if an asynchronous action is in progress.
+- <InlineCode>error</InlineCode>: Stores any error messages.
+
+Let's break down the steps to set up and use these states effectively.
+
+### Step 1: Initialize State Variables
+
+<CodeBlock language="tsx">
+{`
+"use client";
+
+import React, { useEffect, useState } from 'react';
+
+export default function DataUpdateComponent({ dataItem, authorized }) {
+    const [isEditing, setIsEditing] = useState(false);       // Tracks if we're in edit mode
+    const [formData, setFormData] = useState({});            // Holds current form values
+    const [originalData, setOriginalData] = useState({});    // Keeps a copy of the original data
+    const [isPending, setIsPending] = useState(false);       // Indicates if an async action is in progress
+    const [error, setError] = useState(null);                // Stores any error messages
+
+    // ...
+}
+`}
+</CodeBlock>
+
+### Step 2: Sync State with Incoming Data
+
+<CodeBlock language="tsx">
+{`
+"use client";
+
+import React, { useEffect, useState } from 'react';
+
+export default function DataUpdateComponent({ dataItem, authorized }) {
+    const [isEditing, setIsEditing] = useState(false);       // Tracks if we're in edit mode
+    const [formData, setFormData] = useState({});            // Holds current form values
+    const [originalData, setOriginalData] = useState({});    // Keeps a copy of the original data
+    const [isPending, setIsPending] = useState(false);       // Indicates if an async action is in progress
+    const [error, setError] = useState(null);                // Stores any error messages
+
+    // Synchronize formData and originalData with dataItem prop
+    useEffect(() => { // [!code ++]
+      if (dataItem) { // [!code ++]
+        setFormData(dataItem); // [!code ++]
+        setOriginalData(dataItem); // [!code ++]
+      } // [!code ++]
+    }, [dataItem]); // [!code ++]
+
+    return (
+      // ...
+    );
+}
+`}
+</CodeBlock>
